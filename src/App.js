@@ -46,21 +46,20 @@ function App() {
 
       const resize = faceapi.resizeResults(data, display);
 
-      canvas.current.getContext("2d").clearRect(0,0, display.width, display.height);
+      canvas.current.getContext("2d").clearRect(0,0, canvas.current.width, canvas.current.height);
 
       faceapi.draw.drawDetections(canvas.current, resize);
       faceapi.draw.drawFaceLandmarks(canvas.current, resize);
       faceapi.draw.drawFaceExpressions(canvas.current, resize);
 
         console.log(data)
-    },100)
+    },3000)
   }
 
   return (
     <div className="App">
-      <h1>{isReady? "ready" : "not ready"}</h1>
       <video width= "720" height="560" autoPlay muted ref={video} onPlay={play}/>
-      <canvas width= "720" height="560" ref={canvas}/>
+      <canvas ref={canvas}/>
     </div>
   );
 
