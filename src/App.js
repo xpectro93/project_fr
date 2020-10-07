@@ -69,7 +69,7 @@ function App() {
           <canvas ref={canvas}/>
         </div>
 
-       
+       <ShowExpression expressions= { data } />
 
       
     </div>
