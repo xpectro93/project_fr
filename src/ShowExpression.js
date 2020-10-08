@@ -3,7 +3,7 @@ import React from 'react';
 export default function Showexpression({expressions}) {
     
     let topExpression = {
-        name:"None",
+        name:"Loading",
         value:0
     };
   
