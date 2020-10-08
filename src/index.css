@@ -23,3 +23,6 @@ body {
 canvas {
   position:absolute;
 }
+.jpg {
+  width:400px;
+}
