@@ -18,8 +18,6 @@ export default function Showexpression({expressions}) {
     
         }
 
-    
-    console.log(topExpression)
         
 
     return (

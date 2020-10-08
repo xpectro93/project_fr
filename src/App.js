@@ -5,6 +5,8 @@ import { detectAllFaces } from 'face-api.js';
 
 import ShowExpression from './ShowExpression.js'
 
+const MODEL_URL = process.env.PUBLIC_URL + "models";
+
 function App() {
   const [ isReady, setIsReady ] = useState(false);
   const [ data, setData ] = useState(null);
@@ -12,15 +14,16 @@ function App() {
   const video = useRef(null);
   const canvas = useRef(null);
    useEffect(() => {
-    const loadModels = async () =>{
-      const MODEL_URL = process.env.PUBLIC_URL + "models";
+    const loadModels =  async () =>{
+      
       setIsReady(!isReady);
-      Promise.all([
+      await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
         faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
         faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
         faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL)
-      ]).then(start);
+      ])
+      start ();
     }
     loadModels();
    
@@ -59,6 +62,7 @@ function App() {
         setData(data[0].expressions);
 
       }
+      console.log(data);
     },300)
   }
 
