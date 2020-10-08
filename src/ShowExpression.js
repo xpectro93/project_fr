@@ -10,7 +10,7 @@ export default function Showexpression({expressions}) {
         if(expressions) {
             for(let expression in expressions) {
     
-                if(expressions[expression] > topExpression.value) {
+               if(expressions[expression] > topExpression.value) {
                     topExpression.name = expression;
                     topExpression.value = expressions[expression]
                 }

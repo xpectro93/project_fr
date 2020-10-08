@@ -16,7 +16,7 @@ function App() {
    useEffect(() => {
     const loadModels =  async () =>{
       
-      setIsReady(!isReady);
+      setIsReady(currIsReady => !currIsReady);
       await Promise.all([
         faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
         faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
