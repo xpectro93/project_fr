@@ -54,9 +54,9 @@ function App() {
 
       canvas.current.getContext("2d").clearRect(0,0, canvas.current.width, canvas.current.height);
 
-      faceapi.draw.drawDetections(canvas.current, resize);
+      // faceapi.draw.drawDetections(canvas.current, resize);
       faceapi.draw.drawFaceLandmarks(canvas.current, resize);
-      faceapi.draw.drawFaceExpressions(canvas.current, resize);
+      // faceapi.draw.drawFaceExpressions(canvas.current, resize);
       
       if(data[0]) {
         setData(data[0].expressions);

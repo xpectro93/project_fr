@@ -1,32 +1,48 @@
-import React, { useEffect , useState } from 'react';
+import React, { useEffect , useState, useMemo } from 'react';
 import axios from  'axios'
 
 
-const url = 'https://www.reddit.com/r/eyebleach.json?&count=25'
+const url1 = 'https://www.reddit.com/r/eyebleach.json?&count=10'
+const url2 = 'https://www.reddit.com/r/confusingperspective.json?&count=10'
+const url3 = 'https://www.reddit.com/r/pics.json?&count=10'
 export default function Showexpression({expressions}) {
     const [ resp, setResp ] = useState(null);
-
+    let topExpression = {
+        name :"Loading",
+        value : 0
+    }
     useEffect(()=> {
         const fetchContent = async () => {
-            try {
-                let response = await axios.get(url);
-                console.log("REDDIT",response);
-                setResp(response)
-            }
-            catch {
+           
+                try {
+                    if(topExpression === "surprised") 
+                    {
+                        let response = await axios.get(url1);
+                        setResp(response)
+                        console.log('this is happening')
     
-            }
+                    }
+                    else if(topExpression === "neutral"){
+                        let response = await axios.get(url2);
+                        setResp(response)
+                    }else {
+                        let response = await axios.get(url3);
+                        setResp(response)
+                    }
+                }
+                catch {
+        
+                }
+            
         }
         fetchContent()
+        
     }, [])
     
 
 
 
-    let topExpression = {
-        name:"Loading",
-        value:0
-    };
+  
   
         if(expressions) {
             for(let expression in expressions) {
