@@ -7,6 +7,22 @@ import ShowExpression from './ShowExpression.js'
 
 const MODEL_URL = process.env.PUBLIC_URL + "models";
 
+const getExpression = ( data ) => {
+  let largest = {
+    name: "none",
+    value: 0
+  }
+  for( let key in data ) {
+    if( data[key] > largest.value ) 
+    {
+      largest.name = key
+      largest.value = data[key]
+    }
+  }
+  return largest.name;
+}
+
+
 function App() {
   const [ isReady, setIsReady ] = useState(false);
   const [ data, setData ] = useState(null);
@@ -54,15 +70,17 @@ function App() {
 
       canvas.current.getContext("2d").clearRect(0,0, canvas.current.width, canvas.current.height);
 
-      // faceapi.draw.drawDetections(canvas.current, resize);
+      faceapi.draw.drawDetections(canvas.current, resize);
       faceapi.draw.drawFaceLandmarks(canvas.current, resize);
-      // faceapi.draw.drawFaceExpressions(canvas.current, resize);
+      faceapi.draw.drawFaceExpressions(canvas.current, resize);
       
       if(data[0]) {
-        setData(data[0].expressions);
-
+        let dataExpresssions = data[0].expressions;
+        let expression = getExpression(dataExpresssions);
+        setData(expression);
+        
+        
       }
-      console.log(data);
     },300)
   }
 
@@ -73,7 +91,9 @@ function App() {
           <canvas ref={canvas}/>
         </div>
 
-       <ShowExpression expressions= { data } />
+       {data !== null ?  
+          <ShowExpression expressions= { data } /> 
+        : "Loading this shiz"}
 
       
     </div>
