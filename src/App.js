@@ -81,7 +81,7 @@ function App() {
         
         
       }
-    },300)
+    },3000)
   }
 
   return (
@@ -91,8 +91,10 @@ function App() {
           <canvas ref={canvas}/>
         </div>
 
-       {data !== null ?  
-          <ShowExpression expressions= { data } /> 
+       {data !== null  ? <div>
+            <h1>{data}</h1>
+            <ShowExpression expression= { data } />
+       </div>
         : "Loading this shiz"}
 
       
