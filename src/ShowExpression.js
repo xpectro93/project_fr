@@ -2,8 +2,8 @@ import React, { useEffect , useState } from 'react';
 import axios from  'axios'
 
 
-const url1 = 'https://www.reddit.com/r/eyebleach.json?&count=10'
-const url2 = 'https://www.reddit.com/r/confusingperspective.json?&count=10'
+const url1 = 'https://www.reddit.com/r/eyebleach/random.json?&count=10'
+const url2 = 'https://www.reddit.com/r/confusing_perspective/random.json?&count=10'
 const url3 = 'https://www.reddit.com/r/pics.json?&count=10'
 
 
@@ -18,6 +18,7 @@ export default function Showexpression({expression}) {
             try { 
                 if(expression === "surprised") {
                     let response = await axios.get(url2);
+                    // debugger
                     setResp(response)
                 }
                 else if(expression === "happy") {
@@ -43,7 +44,8 @@ export default function Showexpression({expression}) {
     return (
         <div className="view">
             {/* <h1>{expressions}</h1> */}
-            {resp && expression ? <div>
+            {resp?.data ? <img src={resp.data[0].data.children[0].data.url}/> :'nothing'}
+            {/* {resp && expression ? <div>
                         {resp.data.data.children.map((post,i) => {
                             if(post.data.url.includes('jpg')) {
                                 return <img className="jpg" key={post.data.title + i} src={post.data.url}></img>
@@ -51,7 +53,7 @@ export default function Showexpression({expression}) {
                             return <h1  key={post.data.title + i} >{post.data.url}</h1>
                         })
                         }
-                   </div> : "no data"}
+                   </div> : "no data"} */}
         </div>
     )
 }
