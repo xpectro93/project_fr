@@ -9,10 +9,10 @@ const url3 = 'https://www.reddit.com/r/pics.json?&count=10'
 
 export default function Showexpression({expression}) {
     const [ resp, setResp ] = useState(null);
-
+    const [ lastExpression, setLastExpression ] = useState(null);
 
     useEffect(()=> {
-        console.log("its refreshing")
+
         const fetchContent = async() => {
             console.log('fetching')
             try { 
@@ -32,10 +32,13 @@ export default function Showexpression({expression}) {
             
         }
 
+        if(expression !== "neutral" && lastExpression !== expression) {
+            setLastExpression(expression);
+            fetchContent()
+        }
         
-        fetchContent()
 
-    }, [expression !== "neutral"])
+    }, [expression])
     console.log(resp, expression)
     return (
         <div className="view">
