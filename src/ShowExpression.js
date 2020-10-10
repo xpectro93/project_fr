@@ -1,11 +1,14 @@
 import React, { useEffect , useState } from 'react';
 import axios from  'axios'
 
-
 const url1 = 'https://www.reddit.com/r/eyebleach/random.json?&count=10'
 const url2 = 'https://www.reddit.com/r/confusing_perspective/random.json?&count=10'
-const url3 = 'https://www.reddit.com/r/pics.json?&count=10'
 
+const isValidUrl = url =>  url.includes("jpg") || url.includes("jpeg") || url.includes("gif")
+
+
+        
+        
 
 export default function Showexpression({expression}) {
     const [ resp, setResp ] = useState(null);
@@ -14,17 +17,43 @@ export default function Showexpression({expression}) {
     useEffect(()=> {
 
         const fetchContent = async() => {
-            console.log('fetching')
+            console.log('fetching');
+            let finished = false;
+            const loop = async (url) => {
+                return new Promise(async (resolve, reject) => {
+                    const inner = async () => {
+                        if (!finished) {
+                            let post = await axios.get(url);
+                            let postUrl = post.data[0].data.children[0].data.url;
+                            console.log(postUrl)
+                            if (isValidUrl(postUrl)) { 
+                               finished = true;
+                               console.log("This is my resolve",resolve());
+                            } else {
+                               return inner();
+                            }
+                        }
+                    }
+                    await inner();
+                })
+            }
+
             try { 
+
+
                 if(expression === "surprised") {
-                    let response = await axios.get(url2);
-                    // debugger
-                    setResp(response)
+                    await loop(url1);
+                    
+
                 }
                 else if(expression === "happy") {
-                    let response = await axios.get(url1);
-                    setResp(response)
+                    await loop(url2);
+                    // let response = await axios.get(url1);
+
+                    // let url = response.data[0].data.children[0].data.url;
+    
                 }
+                
                 
             }
             catch  {
@@ -35,6 +64,8 @@ export default function Showexpression({expression}) {
 
         if(expression !== "neutral" && lastExpression !== expression) {
             setLastExpression(expression);
+
+           
             fetchContent()
         }
         
@@ -44,7 +75,7 @@ export default function Showexpression({expression}) {
     return (
         <div className="view">
             {/* <h1>{expressions}</h1> */}
-            {resp?.data ? <img src={resp.data[0].data.children[0].data.url}/> :'nothing'}
+            {resp?.data ? <img style={{width:"500px"}}src={resp.data[0].data.children[0].data.url}/> :'nothing'}
             {/* {resp && expression ? <div>
                         {resp.data.data.children.map((post,i) => {
                             if(post.data.url.includes('jpg')) {
