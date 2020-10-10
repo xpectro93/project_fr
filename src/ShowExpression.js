@@ -1,8 +1,13 @@
 import React, { useEffect , useState } from 'react';
-import axios from  'axios'
+import axios from  'axios';
 
-const url1 = 'https://www.reddit.com/r/eyebleach/random.json?&count=10'
-const url2 = 'https://www.reddit.com/r/confusing_perspective/random.json?&count=10'
+import Image from 'react-bootstrap/Image';
+import Row from 'react-bootstrap/Row'
+
+
+const cute = 'https://www.reddit.com/r/eyebleach/random.json'
+const wow = 'https://www.reddit.com/r/confusing_perspective/random.json'
+const smile = 'https://www.reddit.com/r/memes/random.json'
 
 const isValidUrl = url =>  (url.includes("jpg") || url.includes("jpeg") || url.includes("gif")) && !url.includes("gifv")
 
@@ -16,7 +21,7 @@ export default function Showexpression({expression}) {
     useEffect(()=> {
 
         const fetchContent = async() => {
-            console.log('fetching');
+
             let finished = false;
             const loop = async (url) => {
                 return new Promise(async (resolve, reject) => {
@@ -42,16 +47,16 @@ export default function Showexpression({expression}) {
 
 
                 if(expression === "happy") {
-                    await loop(url1);
+                    await loop(smile);
                     
 
                 }
                 else if(expression === "surprised") {
-                    await loop(url2);
-                    // let response = await axios.get(url1);
-
-                    // let url = response.data[0].data.children[0].data.url;
+                    await loop(wow);
     
+                }
+                else if(expression === "sad"|| expression ==="fearful") {
+                    await loop(cute)
                 }
                 
                 
@@ -71,20 +76,16 @@ export default function Showexpression({expression}) {
         
 
     }, [expression])
-    console.log(resp, expression)
+
     return (
-        <div className="view">
-            {/* <h1>{expressions}</h1> */}
-            {resp?.data ? <img style={{width:"500px"}}src={resp.data[0].data.children[0].data.url}/> :'nothing'}
-            {/* {resp && expression ? <div>
-                        {resp.data.data.children.map((post,i) => {
-                            if(post.data.url.includes('jpg')) {
-                                return <img className="jpg" key={post.data.title + i} src={post.data.url}></img>
-                            }
-                            return <h1  key={post.data.title + i} >{post.data.url}</h1>
-                        })
-                        }
-                   </div> : "no data"} */}
-        </div>
+        <>     
+            {resp?.data ? 
+            <>
+                <img style={{width:"500px"}}src={resp.data[0].data.children[0].data.url}/> 
+            </>
+
+
+            :'Loading'}
+        </>
     )
 }

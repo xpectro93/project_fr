@@ -4,6 +4,9 @@ import './App.css';
 import { detectAllFaces } from 'face-api.js';
 
 import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+
 
 import ShowExpression from './ShowExpression.js'
 
@@ -62,8 +65,8 @@ function App() {
       canvas.current.innerHTML = faceapi.createCanvasFromMedia(video.current);
 
       const display = {
-        width:720,
-        height:560
+        width:480,
+        height:360
       }
       faceapi.matchDimensions(canvas.current, display);
       const data = await detectAllFaces(video.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
@@ -88,15 +91,16 @@ function App() {
 
   return (
     <Container>
-        <div id="faceWrapper"> 
-          <video width= "720" height="560" autoPlay muted ref={video} onPlay={play}/>
+        <Row> 
+          <video width= "480" height="360" autoPlay muted ref={video} onPlay={play}/>
+          <h1>{data}</h1>
           <canvas ref={canvas}/>
-        </div>
+        </Row>
 
-       {data !== null  ? <div>
-            <h1>{data}</h1>
-            <ShowExpression expression= { data } />
-       </div>
+       {data !== null  ? 
+       <Row>
+          <ShowExpression expression= { data } />
+       </Row>
         : "Loading this shiz"}
 
       
