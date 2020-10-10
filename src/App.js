@@ -3,6 +3,8 @@ import * as faceapi from "face-api.js";
 import './App.css';
 import { detectAllFaces } from 'face-api.js';
 
+import Container from 'react-bootstrap/Container'
+
 import ShowExpression from './ShowExpression.js'
 
 const MODEL_URL = process.env.PUBLIC_URL + "models";
@@ -85,7 +87,7 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <Container>
         <div id="faceWrapper"> 
           <video width= "720" height="560" autoPlay muted ref={video} onPlay={play}/>
           <canvas ref={canvas}/>
@@ -98,7 +100,7 @@ function App() {
         : "Loading this shiz"}
 
       
-    </div>
+    </Container>
   );
 
 }
