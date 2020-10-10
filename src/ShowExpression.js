@@ -4,7 +4,7 @@ import axios from  'axios'
 const url1 = 'https://www.reddit.com/r/eyebleach/random.json?&count=10'
 const url2 = 'https://www.reddit.com/r/confusing_perspective/random.json?&count=10'
 
-const isValidUrl = url =>  url.includes("jpg") || url.includes("jpeg") || url.includes("gif")
+const isValidUrl = url =>  (url.includes("jpg") || url.includes("jpeg") || url.includes("gif")) && !url.includes("gifv")
 
 
         
@@ -13,7 +13,6 @@ const isValidUrl = url =>  url.includes("jpg") || url.includes("jpeg") || url.in
 export default function Showexpression({expression}) {
     const [ resp, setResp ] = useState(null);
     const [ lastExpression, setLastExpression ] = useState(null);
-
     useEffect(()=> {
 
         const fetchContent = async() => {
@@ -28,6 +27,7 @@ export default function Showexpression({expression}) {
                             console.log(postUrl)
                             if (isValidUrl(postUrl)) { 
                                finished = true;
+                               setResp(oldpost => post)
                                console.log("This is my resolve",resolve());
                             } else {
                                return inner();
@@ -41,12 +41,12 @@ export default function Showexpression({expression}) {
             try { 
 
 
-                if(expression === "surprised") {
+                if(expression === "happy") {
                     await loop(url1);
                     
 
                 }
-                else if(expression === "happy") {
+                else if(expression === "surprised") {
                     await loop(url2);
                     // let response = await axios.get(url1);
 
@@ -62,12 +62,12 @@ export default function Showexpression({expression}) {
             
         }
 
-        if(expression !== "neutral" && lastExpression !== expression) {
-            setLastExpression(expression);
-
-           
-            fetchContent()
-        }
+            if(expression !== "neutral" && lastExpression !== "expression") {
+                
+                setLastExpression(expression);
+                
+                fetchContent()
+            }
         
 
     }, [expression])
