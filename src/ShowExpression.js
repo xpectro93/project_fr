@@ -77,7 +77,7 @@ export default function Showexpression({expression}) {
         <>     
             {resp?.data ? 
             <>
-                <img style={{width:"300px", objectFit:"cover"}}src={resp.data[0].data.children[0].data.url}/> 
+                <img style={{width:"300px", maxWidth:"100vw", objectFit:"cover"}}src={resp.data[0].data.children[0].data.url}/> 
             </>
 
 

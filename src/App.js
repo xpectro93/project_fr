@@ -6,6 +6,8 @@ import { detectAllFaces } from 'face-api.js';
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import Spinner from 'react-bootstrap/Spinner'
+
 
 
 import ShowExpression from './ShowExpression.js'
@@ -93,17 +95,17 @@ function App() {
 
   return (
     <Container>
-        <Row> 
+        <Row  className="justify-content-center"> 
           <video width= "480" height="360" autoPlay muted ref={video} onPlay={play}/>
           <h1>{data}</h1>
           <canvas ref={canvas}/>
         </Row>
 
+        <Row className="justify-content-center">
        {data !== null  ? 
-       <Row>
           <ShowExpression expression= { data } />
-       </Row>
-        : "Loading this shiz"}
+        : <Spinner styles={{margin:"auto"}} animation="border" variant="info" />}
+      </Row>
 
       
     </Container>
