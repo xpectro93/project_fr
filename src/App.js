@@ -5,7 +5,6 @@ import { detectAllFaces } from 'face-api.js';
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
 import Spinner from 'react-bootstrap/Spinner'
 
 
@@ -37,7 +36,6 @@ function App() {
   const video = useRef(null);
   const canvas = useRef(null);
    useEffect(() => {
-     console.log(video.current.width, canvas.current.width);
 
     const loadModels =  async () =>{
       
