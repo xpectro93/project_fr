@@ -1,9 +1,6 @@
 import React, { useEffect , useState } from 'react';
 import axios from  'axios';
 
-import Image from 'react-bootstrap/Image';
-import Row from 'react-bootstrap/Row'
-
 
 const cute = 'https://www.reddit.com/r/eyebleach/random.json'
 const wow = 'https://www.reddit.com/r/confusing_perspective/random.json'
@@ -29,11 +26,10 @@ export default function Showexpression({expression}) {
                         if (!finished) {
                             let post = await axios.get(url);
                             let postUrl = post.data[0].data.children[0].data.url;
-                            console.log(postUrl)
                             if (isValidUrl(postUrl)) { 
                                finished = true;
-                               setResp(oldpost => post)
-                               console.log("This is my resolve",resolve());
+                               setResp(post)
+                               resolve();
                             } else {
                                return inner();
                             }
@@ -81,7 +77,7 @@ export default function Showexpression({expression}) {
         <>     
             {resp?.data ? 
             <>
-                <img style={{width:"500px"}}src={resp.data[0].data.children[0].data.url}/> 
+                <img style={{width:"300px", objectFit:"cover"}}src={resp.data[0].data.children[0].data.url}/> 
             </>
 
 

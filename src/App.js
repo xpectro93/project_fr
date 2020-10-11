@@ -35,6 +35,8 @@ function App() {
   const video = useRef(null);
   const canvas = useRef(null);
    useEffect(() => {
+     console.log(video.current.width, canvas.current.width);
+
     const loadModels =  async () =>{
       
       setIsReady(currIsReady => !currIsReady);
