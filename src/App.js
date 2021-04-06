@@ -13,6 +13,9 @@ import ShowExpression from './ShowExpression.js'
 
 const MODEL_URL = process.env.PUBLIC_URL + "models";
 
+
+import FRMain from "./faceRecognition/FRMain.js"
+
 const getExpression = ( data ) => {
   let largest = {
     name: "none",
