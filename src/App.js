@@ -11,11 +11,14 @@ import Spinner from 'react-bootstrap/Spinner'
 
 import ShowExpression from './ShowExpression.js'
 
+/////
+import FRMain from "./faceRecognition/FRMain.js";
+import Snek from "./snek/Main.js";
+
+
+import { Switch, Route } from "react-router-dom";
+
 const MODEL_URL = process.env.PUBLIC_URL + "models";
-
-
-import FRMain from "./faceRecognition/FRMain.js"
-
 const getExpression = ( data ) => {
   let largest = {
     name: "none",
@@ -38,80 +41,97 @@ function App() {
 
   const video = useRef(null);
   const canvas = useRef(null);
-   useEffect(() => {
+  //  useEffect(() => {
 
-    const loadModels =  async () =>{
+  //   const loadModels =  async () =>{
       
-      setIsReady(currIsReady => !currIsReady);
-      await Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-        faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-        faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
-        faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL)
-      ])
-      start ();
-    }
-    loadModels();
+  //     setIsReady(currIsReady => !currIsReady);
+  //     await Promise.all([
+  //       faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
+  //       faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
+  //       faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
+  //       faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL)
+  //     ])
+  //     start ();
+  //   }
+  //   loadModels();
    
-  },[])
+  // },[])
 
-  const start = () => {
-     navigator.getUserMedia(
-     { video:{}},
-      steam => video.current.srcObject = steam,
-      err => console.error(err)
-    )
-  }
-  const play = () => {
-    setInterval(async() => {
-      if(isReady) {
-        setIsReady(false);
-      }
-      canvas.current.innerHTML = faceapi.createCanvasFromMedia(video.current);
+  // const start = () => {
+  //    navigator.getUserMedia(
+  //    { video:{}},
+  //     steam => video.current.srcObject = steam,
+  //     err => console.error(err)
+  //   )
+  // }
+  // const play = () => {
+  //   setInterval(async() => {
+  //     if(isReady) {
+  //       setIsReady(false);
+  //     }
+  //     canvas.current.innerHTML = faceapi.createCanvasFromMedia(video.current);
 
-      const display = {
-        width:480,
-        height:360
-      }
-      faceapi.matchDimensions(canvas.current, display);
-      const data = await detectAllFaces(video.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
+  //     const display = {
+  //       width:480,
+  //       height:360
+  //     }
+  //     faceapi.matchDimensions(canvas.current, display);
+  //     const data = await detectAllFaces(video.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
 
-      const resize = faceapi.resizeResults(data, display);
+  //     const resize = faceapi.resizeResults(data, display);
 
-      canvas.current.getContext("2d").clearRect(0,0, canvas.current.width, canvas.current.height);
+  //     canvas.current.getContext("2d").clearRect(0,0, canvas.current.width, canvas.current.height);
 
-      faceapi.draw.drawDetections(canvas.current, resize);
-      faceapi.draw.drawFaceLandmarks(canvas.current, resize);
-      faceapi.draw.drawFaceExpressions(canvas.current, resize);
+  //     faceapi.draw.drawDetections(canvas.current, resize);
+  //     faceapi.draw.drawFaceLandmarks(canvas.current, resize);
+  //     faceapi.draw.drawFaceExpressions(canvas.current, resize);
       
-      if(data[0]) {
-        let dataExpresssions = data[0].expressions;
-        let expression = getExpression(dataExpresssions);
-        setData(expression);
+  //     if(data[0]) {
+  //       let dataExpresssions = data[0].expressions;
+  //       let expression = getExpression(dataExpresssions);
+  //       setData(expression);
         
         
-      }
-    },3000)
-  }
+  //     }
+  //   },3000)
+  // }
 
   return (
-    <Container>
-        <Row  className="justify-content-center"> 
-          <video width= "480" height="360" autoPlay muted ref={video} onPlay={play}/>
-          <h1>{data}</h1>
-          <canvas ref={canvas}/>
-        </Row>
+   <div className={"App"}>
+     <Switch>
+      <Route exact path={"/face-recognition"}>
+        <FRMain/>
+      </Route>
 
-        <Row className="justify-content-center">
-       {data !== null  ? 
-          <ShowExpression expression= { data } />
-        : <Spinner styles={{margin:"auto"}} animation="border" variant="info" />}
-      </Row>
+      <Route exact path={"/snek"}>
+      <Snek/>
+      </Route>
 
-      
-    </Container>
+    </Switch>
+   </div>
+    
+    
+
+    
   );
 
 }
 
 export default App;
+
+// <Container>
+    //     <Row  className="justify-content-center"> 
+    //       <video width= "480" height="360" autoPlay muted ref={video} onPlay={play}/>
+    //       <h1>{data}</h1>
+    //       <canvas ref={canvas}/>
+    //     </Row>
+
+    //     <Row className="justify-content-center">
+    //    {data !== null  ? 
+    //       <ShowExpression expression= { data } />
+    //     : <Spinner styles={{margin:"auto"}} animation="border" variant="info" />}
+    //   </Row>
+
+      
+    // </Container>

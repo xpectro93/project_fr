@@ -28,7 +28,7 @@ const getExpression = data => {
     return largest.name;
 }
 
-function App() {
+function FRMain() {
     const [ isReady, setIsReady ] = useState(false);
     const [ data, setData ] = useState(null);
   
@@ -109,3 +109,4 @@ function App() {
     );
   
   }
+  export default FRMain;
