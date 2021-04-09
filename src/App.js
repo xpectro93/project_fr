@@ -14,7 +14,7 @@ import ShowExpression from './ShowExpression.js'
 /////
 import FRMain from "./faceRecognition/FRMain.js";
 import Snek from "./snek/Main.js";
-
+import Navbar from "./Navbar.js";
 
 import { Switch, Route } from "react-router-dom";
 
@@ -41,6 +41,7 @@ function App() {
 
   return (
    <div className={"App"}>
+     <Navbar/>
      <Switch>
       <Route exact path={"/face-recognition"}>
         <FRMain/>
