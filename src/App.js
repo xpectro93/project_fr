@@ -19,20 +19,7 @@ import Navbar from "./Navbar.js";
 import { Switch, Route } from "react-router-dom";
 
 const MODEL_URL = process.env.PUBLIC_URL + "models";
-const getExpression = ( data ) => {
-  let largest = {
-    name: "none",
-    value: 0
-  }
-  for( let key in data ) {
-    if( data[key] > largest.value ) 
-    {
-      largest.name = key
-      largest.value = data[key]
-    }
-  }
-  return largest.name;
-}
+
 
 
 function App() {
