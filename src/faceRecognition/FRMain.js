@@ -31,15 +31,17 @@ const getExpression = data => {
 function FRMain() {
     const [ isReady, setIsReady ] = useState(false);
     const [ data, setData ] = useState(null);
-  
+
     const video = useRef(null);
     const canvas = useRef(null);
+    let playTimeInterval;
      useEffect(() => {
+
   
       const loadModels =  async () =>{
         
         setIsReady(currIsReady => !currIsReady);
-        await Promise.all([
+        Promise.all([
           faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
           faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
           faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
@@ -48,23 +50,27 @@ function FRMain() {
         start ();
       }
       loadModels();
-     
+     return ()=> {
+      console.log('unload') 
+      clearInterval(playTimeInterval)}
     },[])
   
     const start = () => {
+      console.log("start b happenning")
        navigator.getUserMedia(
        { video:{}},
         steam => video.current.srcObject = steam,
         err => console.error(err)
       )
     }
+    /// Add a way to stop play once different route is clicked. 
     const play = () => {
-      setInterval(async() => {
+       playTimeInterval =  setInterval(async() => {
         if(isReady) {
           setIsReady(false);
+   
         }
-        canvas.current.innerHTML = faceapi.createCanvasFromMedia(video.current);
-  
+        
         const display = {
           width:480,
           height:360
