@@ -34,7 +34,6 @@ function FRMain() {
 
     const video = useRef(null);
     const canvas = useRef(null);
-    let playTimeInterval;
      useEffect(() => {
 
   
@@ -51,8 +50,7 @@ function FRMain() {
       }
       loadModels();
      return ()=> {
-      console.log('unload') 
-      for(let i=0; i<100; i++){ 
+      for(let i=0; i<1000; i++){ 
         window.clearInterval(i);
       }
     }
@@ -60,16 +58,13 @@ function FRMain() {
     },[])
   
     const start = () => {
-      console.log("start b happenning")
        navigator.getUserMedia(
        { video:{}},
         steam => video.current.srcObject = steam,
         err => console.error(err)
       )
     }
-    /// Add a way to stop play once different route is clicked. 
     const play = () => {
-      console.log('playin...')
     setInterval(async() => {
         if(isReady) {
           setIsReady(false);
@@ -80,7 +75,7 @@ function FRMain() {
           width:480,
           height:360
         }
-        console.log("canvas dis", canvas.current, display)
+
         faceapi.matchDimensions(canvas.current, display);
         const data = await detectAllFaces(video.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
   
@@ -105,9 +100,7 @@ function FRMain() {
     return (
       <Container>
           <Row  className="justify-content-center"> 
-            <video width= "480" height="360" autoPlay muted ref={video} onPlay={() => {play()
-              console.log('video')
-            }}/>
+            <video width= "480" height="360" autoPlay muted ref={video} onPlay={play}/>
             <h1>{data}</h1>
             <canvas ref={canvas}/>
           </Row>
