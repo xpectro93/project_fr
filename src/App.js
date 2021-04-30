@@ -18,10 +18,6 @@ import Navbar from "./Navbar.js";
 
 import { Switch, Route } from "react-router-dom";
 
-const MODEL_URL = process.env.PUBLIC_URL + "models";
-
-
-
 function App() {
   
 
