@@ -1,9 +1,14 @@
 import React from "react";
 
+let style = {
+    color:"white",
+
+}
+
 const Snek = () => {
 
     return(
-        <div style={{color:"white"}}>
+        <div style={style}>
             SNEK
         </div>
     )
